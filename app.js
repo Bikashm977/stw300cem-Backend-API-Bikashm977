@@ -51,7 +51,7 @@ app.post('/upload', upload.single('imageFile'), (req, res) => {
 
 app.post('/uploadimg', upload.single('files'), (req, res) => {
     res.send(JSON.stringify({
-    filename:Image
+        filename: Image
     }))
 })
 
@@ -107,7 +107,7 @@ app.post("/login22", async function (req, res) {
 })
 
 //User login Android
-app.post('/login', function(req, res){
+app.post('/login', function (req, res) {
     var email = req.body.email;
     var password = req.body.password;
     console.log(req.body);
@@ -116,16 +116,16 @@ app.post('/login', function(req, res){
         email: email,
         password: password
 
-    }).then(function(logindata){
-        
-        if(logindata){
+    }).then(function (logindata) {
+
+        if (logindata) {
             console.log(logindata)
             res.send(JSON.stringify(logindata));
         }
-        else{
+        else {
             res.send(JSON.stringify('invalid_login'))
         }
-    }).catch(function(e){
+    }).catch(function (e) {
         res.send(e)
     })
 })
@@ -136,7 +136,7 @@ app.get('/users', auth, function (req, res) {
 })
 
 // Profile Update
-app.post('/updateuser/:id', function(req, res){
+app.post('/updateuser/:id', function (req, res) {
     var fullname = req.body.fullname;
     var email = req.body.email;
     var phone = req.body.phone;
@@ -144,21 +144,21 @@ app.post('/updateuser/:id', function(req, res){
     var image = req.body.image;
     var uid = req.params.id;
     console.log(req.body);
-    user.updateOne({_id: new ObjectID(uid)},
-    {
-        $set:{
-            fullname:fullname,
-            email:email,
-            phone:phone,
-            address:address,
-            image:image
-        }
-    }).then(function(){
-        console.log('Success')
-        res.send(JSON.stringify('profile_updated'));
-    }).catch(function(){
-        console.log('error')
-    })
+    user.updateOne({ _id: new ObjectID(uid) },
+        {
+            $set: {
+                fullname: fullname,
+                email: email,
+                phone: phone,
+                address: address,
+                image: image
+            }
+        }).then(function () {
+            console.log('Success')
+            res.send(JSON.stringify('profile_updated'));
+        }).catch(function () {
+            console.log('error')
+        })
 })
 
 
@@ -216,6 +216,7 @@ app.get('/viewhostel', function (req, res) {
     var mysort = { _id: -1 };
     hostel.find().sort(mysort).then(function (hostel) {
         res.send(hostel);
+
     }).catch(function (e) {
         res.send(e);
     })
@@ -391,6 +392,7 @@ app.post('/update_hostel_room', function (req, res) {
 //get room
 app.get('/get_room/:id', function (req, res) {
     var id = req.params.id;
+    console.log(id);
     room.find({ hostelId: new ObjectID(id) }).then(function (room) {
         res.send(room)
         res.json({ msg: "room_edited" })
@@ -417,7 +419,7 @@ app.post('/send_user_message', function (req, res) {
         message: message
     })
     MessageData.save().then(function () {
-        res.json({ msg: "message_sent" })
+        res.send(JSON.stringify('Message_sent'));
     }).catch(function (e) {
         res.send(e)
     })
@@ -460,7 +462,7 @@ app.post('/user_review', function (req, res) {
         hostelId: hostelId
     })
     ReviewData.save().then(function () {
-        res.json({ msg: "review_sent" })
+        res.send(JSON.stringify('Review_sent'));
     }).catch(function (e) {
         res.send(e)
     })
