@@ -159,6 +159,7 @@ app.post('/updateuser/:id', function (req, res) {
         }).catch(function () {
             console.log('error')
         })
+
 })
 
 
@@ -439,6 +440,7 @@ app.get('/viewmessage', function (req, res) {
 //Delete User Message
 app.delete('/delete_message/:id', function (req, res) {
     Message.findByIdAndDelete(req.params.id).then(function () {
+        console.log(req.param.id);
         res.json({ msg: "message_delete" })
     }).catch(function (e) {
         res.send(e)
